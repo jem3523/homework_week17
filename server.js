@@ -2,6 +2,7 @@ const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const path = require("path");
+const moment = require('moment');
 
 const PORT = process.env.PORT || 3000;
 
@@ -67,13 +68,22 @@ app.put("/api/workouts/:id", (req, res) =>
 //get a 7 day range
 app.get("/api/workouts/range", (req, res) => 
 {
-  db.Workout.find({},
+  //var lastWeek = moment().subtract(7, 'days').format()
+
+  var lastWeek = new Date();
+  //lastWeek.setDate(lastWeek.getDate()-7);
+  lastWeek = "2020-02-15 23:12:08.639Z"
+  console.log("lastWeek: " + lastWeek)
+
+  db.Workout.find({day: {$gt: lastWeek} },
   (error, data) => 
   {
     if (error) {res.send(error)} 
-    else {res.json(data)}
+    else
+    {res.json(data)}
   });
 });
+
 
 
 // DELETE /api/workouts  body.id
