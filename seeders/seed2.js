@@ -8,7 +8,7 @@ mongoose.connect("mongodb://localhost/workout", {
 
 let workoutSeed = [
   {
-    day: "2020-02-13 23:12:08.639Z",
+    day: new Date("2020-02-13 23:12:08.639Z"),
     exercises: [
       {
         type: "resistance",
@@ -21,7 +21,7 @@ let workoutSeed = [
     ]
   },
   {
-    day: "2020-02-14 23:12:08.639Z",
+    day: new Date("2020-02-14 23:12:08.639Z"),
     exercises: [
       {
         type: "resistance",
@@ -34,7 +34,7 @@ let workoutSeed = [
     ]
   },
   {
-    day: "2020-02-15 23:12:08.639Z",
+    day: new Date("2020-02-15 23:12:08.639Z"),
     exercises: [
       {
         type: "resistance",
@@ -47,7 +47,7 @@ let workoutSeed = [
     ]
   },
   {
-    day: "2020-02-16 23:12:08.639Z",
+    day: new Date("2020-02-16 23:12:08.639Z"),
     exercises: [
       {
         type: "cardio",
@@ -58,7 +58,7 @@ let workoutSeed = [
     ]
   },
   {
-    day: "2020-02-17 23:12:08.639Z",
+    day: new Date("2020-02-17 23:12:08.639Z"),
     exercises: [
       {
         type: "resistance",

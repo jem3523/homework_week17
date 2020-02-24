@@ -10,11 +10,6 @@ const WorkoutSchema = new Schema({
   exercises: []
 });
 
-// WorkoutSchema.methods.numberDate = function() 
-// {
-//   this.day = 
-//   return this.day;
-// };
 
 const Workout = mongoose.model("workout", WorkoutSchema);
 
