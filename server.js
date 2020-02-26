@@ -57,9 +57,10 @@ app.post("/api/workouts", ({ body }, res) => {
 app.put("/api/workouts/:id", async(req, res) => 
 {
   try{
-  const updatedWorkout = await db.Workout.updateOne(
+  const updatedWorkout = await db.Workout.findOneAndUpdate(
     {_id: mongoose.Types.ObjectId(req.params.id)},
-    {$push: {"exercises": req.body}}
+    {$push: {"exercises": req.body}}, 
+    {new: true}
   );
     await updatedWorkout.addDurationTotal();
     await updatedWorkout.save();
