@@ -54,25 +54,28 @@ app.post("/api/workouts", ({ body }, res) => {
 
 
 //update a workout with an exercise
-app.put("/api/workouts/:id", (req, res) => 
+app.put("/api/workouts/:id", async(req, res) => 
 {
-  db.Workout.update(
+  try{
+  const updatedWorkout = await db.Workout.updateOne(
     {_id: mongoose.Types.ObjectId(req.params.id)},
     {$push: {"exercises": req.body}}
-  )
-  .then(data => {res.json(data)})
-  .catch(err => {res.json(err)})
+  );
+    await updatedWorkout.addDurationTotal();
+    await updatedWorkout.save();
+    res.json(updatedWorkout);
+    console.log ("updated workout:" + updatedWorkout);
+  }
+  catch(err) {res.send(err)};
 });
 
 
 //get a 7 day range
 app.get("/api/workouts/range", (req, res) => 
 {
-  //var lastWeek = moment().subtract(7, 'days').format()
-
   var lastWeek = new Date();
-  //lastWeek.setDate(lastWeek.getDate()-7);
-  lastWeek = "2020-02-15 23:12:08.639Z"
+  lastWeek.setDate(lastWeek.getDate()-7);
+  lastWeek = lastWeek.toISOString();
   console.log("lastWeek: " + lastWeek)
 
   db.Workout.find({day: {$gt: lastWeek} },
