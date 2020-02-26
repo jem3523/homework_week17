@@ -54,14 +54,17 @@ app.post("/api/workouts", ({ body }, res) => {
 
 
 //update a workout with an exercise
-app.put("/api/workouts/:id", async(req, res) => 
+//NOTE: findOneAndUpdate is required to do this ... paired with new:true option
+//async await is needed so that each step waits for the prior to finish
+app.put("/api/workouts/:id", async (req, res) => 
 {
-  try{
-  const updatedWorkout = await db.Workout.findOneAndUpdate(
-    {_id: mongoose.Types.ObjectId(req.params.id)},
-    {$push: {"exercises": req.body}}, 
-    {new: true}
-  );
+  try
+  {
+    const updatedWorkout = await db.Workout.findOneAndUpdate(
+      {_id: mongoose.Types.ObjectId(req.params.id)},
+      {$push: {"exercises": req.body}}, 
+      {new: true}
+    );
     await updatedWorkout.addDurationTotal();
     await updatedWorkout.save();
     res.json(updatedWorkout);
@@ -75,7 +78,9 @@ app.put("/api/workouts/:id", async(req, res) =>
 app.get("/api/workouts/range", (req, res) => 
 {
   var lastWeek = new Date();
+  //now take the current date back 7 days
   lastWeek.setDate(lastWeek.getDate()-7);
+  //convert to ISO format
   lastWeek = lastWeek.toISOString();
   console.log("lastWeek: " + lastWeek)
 

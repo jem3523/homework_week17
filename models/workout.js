@@ -20,6 +20,7 @@ WorkoutSchema.methods.addDurationTotal = function()
     total += this.exercises[i].duration;
   }
   this.totalDuration = total;
+  return total;
 };
 
 const Workout = mongoose.model("workout", WorkoutSchema);
